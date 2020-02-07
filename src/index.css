@@ -1,13 +1,75 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 body {
   margin: 0;
+  background-color: rgb(18, 18, 18);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: rgb(255, 255, 255);
+}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.catalogForm {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.catalogForm__input {
+  border: none;
+  background: none;
+  color: rgb(255, 255, 255);
+  padding: 5px;
+  outline: none;
+}
+
+.container {
+  margin-left: 40px;
+}
+.container__catalog {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.container__catalog--parent {
+  background-color: rgb(25, 25, 25);
+}
+.container__buttons {
+  margin-left: 20px;
+}
+
+.message {
+  padding: 10px;
+  position: absolute;
+  top: 50vh;
+  left: 50%;
+  min-width: 200px;
+  transform: translate(-50%, -50%);
+  background-color: rgb(32, 32, 32);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+.message__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.message__button {
+  width: 80px;
+  padding: 5px;
+  color: rgb(255, 255, 255);
+}
+.message__button-close {
+  background-color: #B00020;
+}
+.message__button-ok {
+  background-color: #32cb00;
 }

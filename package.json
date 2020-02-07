@@ -10,19 +10,20 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "concurrently": "^5.1.0",
     "json-server": "^0.15.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
-    "concurrently": "^5.0.2",
     "tslint": "^5.20.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "concurrently --kill-others \"node_modules/.bin/json-server --watch ./data/struct.json --port 3050\" \"react-scripts start\"",
-    "build": "react-scripts build",
+    "build": "react-scripts state",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "app": "concurrently --kill-others \"json-server --watch data/struct.json --port 3050\" \"react-scripts start\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,7 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
   }
 }
