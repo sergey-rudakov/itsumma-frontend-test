@@ -19,7 +19,8 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"node_modules/.bin/json-server --watch ./data/struct.json --port 3050\" \"react-scripts start\"",
+    "start": "concurrently --kill-others \"json-server --watch ./data/struct.json --port 3060\" \"react-scripts start\"",
+    "start-react-only": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,6 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

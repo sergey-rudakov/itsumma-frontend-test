@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+body #root {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+body #root main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+body #root main section {
+  flex: 1 1 auto;
+  padding: 15px;
+  border-left: 1px solid #ddd;
+  margin-top: 8px;
+}
+
+.dir-manager {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  max-width: 280px;
+}
+.dir-manager .collection {
+  padding-left: 20px;
+  border-right: none;
+}
+.dir-manager .collection.root {
+  border-bottom: none;
+  padding-left: 0;
+}
+.dir-manager .collection .collection-item {
+  border: none;
+}
+.dir-manager .dir {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.dir-manager .dir * {
+  flex: 0 0 auto;
+  cursor: pointer;
+  user-select: none;
+}
+.dir-manager .dir .btn-del {
+  background: none;
+  border: none;
+}
+.dir-manager .dir .folder-icon {
+  margin: 0 5px 0 5px;
+}
+.dir-manager .dir span {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.dir-manager .dir .expand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: bottom;
+}
+
+/*# sourceMappingURL=style.css.map */
