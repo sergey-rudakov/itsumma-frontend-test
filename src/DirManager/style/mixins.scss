@@ -1,0 +1,6 @@
+@mixin flex-align ($dir: column, $main: center, $cross: center) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $main;
+  align-items: $cross;
+}

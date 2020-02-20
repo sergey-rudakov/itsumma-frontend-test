@@ -1,0 +1,79 @@
+@import "mixins";
+
+//@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  //font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  @include flex-align(row, flex-start, stretch);
+
+  #root {
+    flex: 1 1 auto;
+    @include flex-align(column, flex-start, stretch);
+
+    main {
+      flex: 1 1 auto;
+      @include flex-align(row, flex-start, stretch);
+
+      section {
+        flex: 1 1 auto;
+        padding: 15px;
+        border-left: 1px solid #ddd;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+.dir-manager {
+  flex: 0 0 280px;
+  @include flex-align(column, flex-start, stretch);
+
+  max-width: 280px;
+
+  .collection {
+    padding-left: 20px;
+    border-right: none;
+
+    &.root {
+      border-bottom: none;
+      padding-left: 0;
+    }
+    .collection-item {
+      border: none;
+    }
+  }
+  .dir {
+    @include flex-align(row, space-between, center);
+
+    * {
+      flex: 0 0 auto;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn-del {
+      background: none;
+      border: none
+    }
+    .folder-icon {
+      margin: 0 5px 0 5px;
+    }
+    span {
+      flex: 1 1 auto;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .expand {
+      @include flex-align(column, center, bottom);
+    }
+
+  }
+}
