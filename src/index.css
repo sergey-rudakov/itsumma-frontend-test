@@ -5,9 +5,93 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(36, 36, 36);
+  font-size: 16px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+ul {
+  color: #fff;
+  list-style: none;
+}
+
+ul.hidden {
+  display: none;
+}
+
+button {
+  margin: 0 2px;
+  border: none;
+  padding: 4px 10px;
+  background-color: tomato;
+  border-radius: 0;
+  color: #fff;
+  font-size: 16px;
+}
+
+.directory.collapse .collapse-icon {
+  transform: rotate(-90deg);
+}
+
+.directory__inner {
+  display: flex;
+  align-items: center;
+  width: 350px;
+  background-color: black;
+  padding: 10px;
+  border-bottom: 1px solid #fff;
+}
+
+.directory__inner .svg-icon {
+  margin: 0 5px;
+}
+
+.directory__name {
+  flex-grow: 1;
+}
+
+.modal {
+
+}
+
+.modal__backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal__content {
+  position: relative;
+  max-width: 600px;
+  margin: 200px auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.modal__content .close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+input {
+  padding: 10px;
+  min-width: 300px;
+  font-size: 16px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.svg-icon {
+  cursor: pointer;
 }
