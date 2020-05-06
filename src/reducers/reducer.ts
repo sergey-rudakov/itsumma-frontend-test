@@ -32,7 +32,7 @@ function addDir(addedDir: IDirectory, dirs: IDirectory[]) {
     if (el.parent_id === addedDir.parent_id) {
       el.visibility = true;
       newDir.push(el);
-    }else{
+    } else {
       newDir.push(el);
     }});
   addedDir = {...addedDir, visibility: true};

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {closePopUp, delDir, showPopUp, visibilityDir} from "../actions/actions";
+import {showPopUp, visibilityDir} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
 import {IDirectoryProps} from "../types";
 import AddPopUp from "./AddPopUp";
@@ -15,15 +15,15 @@ const Directory = ({id, name, parent_id, deep, visibility}: IDirectoryProps) => 
     const parent = state.parents[id].length ? "parent" : null;
     const openClass = open ? "open-tri" : "close-tri";
     useEffect(() => !visibility ? setOpen(false) : undefined);
-    useEffect(() => setOpen(true), [state.parents[id].length])
+    useEffect(() => setOpen(true), [state.parents[id].length]);
     return (
       <div style={{marginLeft: `${deep * 25}px`}}
            className={`item-box item-${deep} ${visibilityClass} ${parent}`}>
-            <li className={`list-item list-item-${deep}`}>
+            <li item-title={name} className={`list-item list-item-${deep}`}>
                 {parent ? <span className={`triangle ${openClass}`} onClick={() => {
                 visibilityDir(dispatch, id, state);
                 setOpen(!open);
-            }}/> : null}
+            }} /> : null}
             {name}</li>
           <div className={"action-blocks"}>
               {parent_id !== "null" ?

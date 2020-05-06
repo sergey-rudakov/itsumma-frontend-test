@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, useContext} from "react";
 import {closePopUp} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
 
@@ -9,7 +9,6 @@ interface IErrorPopUp {
 const ErrorPopUp: React.FC<IErrorPopUp> = ({text}) => {
     const direcoryState = useContext(DirectoryContext);
     const dispatch = direcoryState!.dispatch;
-    const state = direcoryState!.state;
     return(
         <div className={"error-popup"}>
            <h2>Ошибка</h2>

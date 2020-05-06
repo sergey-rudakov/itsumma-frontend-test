@@ -1,8 +1,7 @@
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, useContext} from "react";
 import {closePopUp, delDir} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
-import {IDirectory} from "../types";
-import ChangePopUp from "./ChangePopUp";
+
 interface IDel {
     id: string;
     name: string;
@@ -12,7 +11,6 @@ interface IDel {
 const DelPopup: React.FC<IDel> = ({id, name, parent_id}) => {
     const direcoryState = useContext(DirectoryContext);
     const dispatch = direcoryState!.dispatch;
-    const state = direcoryState!.state;
     return(
         <div className={"del-popup"}>
             <h2>Удалить?</h2>

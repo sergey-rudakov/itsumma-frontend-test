@@ -1,7 +1,6 @@
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import {addDir, changeDir, closePopUp, delDir, showPopUp} from "../actions/actions";
+import {changeDir, closePopUp} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
-import ErrorPopUp from "./ErrorPopUp";
 
 interface IChangePopUp {
     id: string;
@@ -12,7 +11,6 @@ interface IChangePopUp {
 const ChangePopUp: React.FC<IChangePopUp> = ({id, name, parent_id}) => {
     const direcoryState = useContext(DirectoryContext);
     const dispatch = direcoryState!.dispatch;
-    const state = direcoryState!.state;
     const [modDir, setmodDir] = useState({
         name,
         id,

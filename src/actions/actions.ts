@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import React from "react";
-import {Simulate} from "react-dom/test-utils";
-import {IDirectory, IState} from "../types";
+import {IDirectory} from "../types";
 
 interface IPaylaodDirs {
     deeps: {[key: string]: number};
@@ -21,6 +20,31 @@ export type ActionType =
 
 // Загрузка директорий
 export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
+    // Обход в глубину для списка директорий
+    // Возвращает массив, в котором директории нахоядтся в порядке выввода на экран
+    function DFS(dirs: IDirectory[]) {
+        const box = dirs;
+        // поиск корневой папки
+        const node = dirs.filter((el) => el.parent_id === "null")[0];
+        const res: IDirectory[] = [];
+        const dirsInWork: IDirectory[] = [];
+        const explored = new Set();
+        dirsInWork.push(node);
+        explored.add(node);
+        while (dirsInWork.length) {
+            const t: IDirectory = dirsInWork.pop()!;
+            res.push(t);
+            box
+                .filter((n) => !explored.has(n))
+                .forEach((n) => {
+                    if (n.parent_id === t.id) {
+                        explored.add(n);
+                        dirsInWork.push(n);
+                    }
+                });
+        }
+        return res;
+    }
     // устанавливает всем дир-ям видимость тру
     function setVisibility(dirs: IDirectory[]) {
         const newDir: IDirectory[] = dirs;
@@ -56,17 +80,22 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
         return res;
     }
     // Загрузка ...
-    const response = await axios.get(`${process.env.REACT_APP_API_HOST}/dir`);
-    if (response && response.data.dir[0] !== null) {
-        setVisibility(response.data.dir);
-        const res = {
-            dirs: response.data.dir,
-            parents: setChilds(response.data.dir),
-            deeps: setDeeps(response.data.dir)
-        };
-        dispatch({type: "LOAD_DIRS", payload: res})
-    }
+    try {
 
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}/dir`);
+        if (response.statusText === "OK" && response.data.dir[0] !== undefined) {
+            const sortedDirs = DFS(response.data.dir);
+            setVisibility(sortedDirs);
+            const res = {
+                dirs: sortedDirs,
+                parents: setChilds(sortedDirs),
+                deeps: setDeeps(sortedDirs),
+            };
+            dispatch({type: "LOAD_DIRS", payload: res});
+        }
+    } catch (e) {
+        alert("Не удалось подключиться к серверу");
+    }
 };
 // Вычисление предков, которых необходимо скрыть вместе с родителем
 // Конечные ноды без предков не удаляются из сета, потому что их "дети" невидимы
@@ -101,7 +130,7 @@ export const visibilityDir = (dispatch: React.Dispatch<ActionType>, id: string, 
 };
 
 export const delDir = (dispatch: React.Dispatch<ActionType>, dir: IDirectory) => {
-    axios.delete(`${process.env.REACT_APP_API_HOST}/dir/${dir.id}`, {}).then((res) => dispatch({
+    axios.delete(`${process.env.REACT_APP_API_HOST}/dir/${dir.id}`).then((res) => dispatch({
         type: "DEL_DIR",
         payload: dir,
     }));

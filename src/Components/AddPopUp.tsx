@@ -1,5 +1,5 @@
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import {addDir, closePopUp, delDir, showPopUp} from "../actions/actions";
+import {addDir, closePopUp, showPopUp} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
 import ErrorPopUp from "./ErrorPopUp";
 

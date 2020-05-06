@@ -1,11 +1,9 @@
-import axios from "axios";
-import React, {useContext, useEffect, useReducer, useState} from "react";
+import React, {useContext, useEffect, useReducer} from "react";
 import {loadData} from "../actions/actions";
 import DataContext from "../contexts/DataContext";
 import DirectoryContext from "../contexts/DirectoryContext";
 import reducer from "../reducers/reducer";
 import {IDirectory} from "../types";
-import DelPopup from "./DelPopup";
 import Directory from "./Directory";
 import MainPopUp from "./MainPopUp";
 
