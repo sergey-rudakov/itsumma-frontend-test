@@ -1,6 +1,7 @@
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import {changeDir, closePopUp} from "../actions/actions";
+import {changeDir, closePopUp, showPopUp} from "../actions/actions";
 import DirectoryContext from "../contexts/DirectoryContext";
+import ErrorPopUp from "./ErrorPopUp";
 
 interface IChangePopUp {
     id: string;
@@ -11,6 +12,7 @@ interface IChangePopUp {
 const ChangePopUp: React.FC<IChangePopUp> = ({id, name, parent_id}) => {
     const direcoryState = useContext(DirectoryContext);
     const dispatch = direcoryState!.dispatch;
+    const state = direcoryState!.state;
     const [modDir, setmodDir] = useState({
         name,
         id,
@@ -20,8 +22,15 @@ const ChangePopUp: React.FC<IChangePopUp> = ({id, name, parent_id}) => {
     const inputEl = useRef<HTMLInputElement>(null);
     const change = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        changeDir(dispatch, modDir);
-        closePopUp(dispatch);
+        if (state.dirs.filter(
+            (el) => el.parent_id === parent_id && el.name === modDir.name && el.id !== id).length !== 0) {
+            const parentName = state.dirs.filter((el) => el.id === parent_id)[0].name;
+            const error = `Каталог с именем ${modDir.name} уже существует в каталоге ${parentName}`;
+            showPopUp(dispatch, <ErrorPopUp text = {error}/>);
+        } else {
+            changeDir(dispatch, modDir);
+            closePopUp(dispatch);
+        }
     };
     return(
             <form onSubmit={change} className={"change-form"}>

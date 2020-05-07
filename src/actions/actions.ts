@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import React from "react";
+import ErrorPopUp from "../Components/ErrorPopUp";
 import {IDirectory} from "../types";
 
 interface IPaylaodDirs {
@@ -45,6 +46,7 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
         }
         return res;
     }
+
     // устанавливает всем дир-ям видимость тру
     function setVisibility(dirs: IDirectory[]) {
         const newDir: IDirectory[] = dirs;
@@ -79,11 +81,11 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
         });
         return res;
     }
-    // Загрузка ...
-    try {
 
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}/dir`);
-        if (response.statusText === "OK" && response.data.dir[0] !== undefined) {
+    // Загрузка ...
+    const response = await axios.get(`${process.env.REACT_APP_API_HOST}/dir`);
+    if (response.status === 200) {
+        if (response.data.dir !== undefined && response.data.dir !== []) {
             const sortedDirs = DFS(response.data.dir);
             setVisibility(sortedDirs);
             const res = {
@@ -92,10 +94,8 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
                 deeps: setDeeps(sortedDirs),
             };
             dispatch({type: "LOAD_DIRS", payload: res});
-        }
-    } catch (e) {
-        alert("Не удалось подключиться к серверу");
-    }
+         } else {alert("Не удается загрузить список директорий"); }
+    } else {alert("Плохой ответ сервера"); }
 };
 // Вычисление предков, которых необходимо скрыть вместе с родителем
 // Конечные ноды без предков не удаляются из сета, потому что их "дети" невидимы
