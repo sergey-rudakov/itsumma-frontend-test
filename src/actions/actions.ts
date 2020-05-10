@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from "axios";
 import React from "react";
-import ErrorPopUp from "../Components/ErrorPopUp";
 import {IDirectory} from "../types";
 
 interface IPaylaodDirs {
@@ -84,9 +83,9 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
 
     // Загрузка ...
     const response = await axios.get(`${process.env.REACT_APP_API_HOST}/dir`);
-    if (response.status === 200) {
-        if (response.data.dir !== undefined && response.data.dir !== []) {
-            const sortedDirs = DFS(response.data.dir);
+    console.log(response.data.length);
+        if (response.data.length !== 0) {
+            const sortedDirs = DFS(response.data);
             setVisibility(sortedDirs);
             const res = {
                 dirs: sortedDirs,
@@ -94,8 +93,7 @@ export const loadData = async (dispatch: React.Dispatch<ActionType>) => {
                 deeps: setDeeps(sortedDirs),
             };
             dispatch({type: "LOAD_DIRS", payload: res});
-         } else {alert("Не удается загрузить список директорий"); }
-    } else {alert("Плохой ответ сервера"); }
+         } else {alert("Список директорий пуст"); }
 };
 // Вычисление предков, которых необходимо скрыть вместе с родителем
 // Конечные ноды без предков не удаляются из сета, потому что их "дети" невидимы
@@ -130,10 +128,13 @@ export const visibilityDir = (dispatch: React.Dispatch<ActionType>, id: string, 
 };
 
 export const delDir = (dispatch: React.Dispatch<ActionType>, dir: IDirectory) => {
-    axios.delete(`${process.env.REACT_APP_API_HOST}/dir/${dir.id}`).then((res) => dispatch({
-        type: "DEL_DIR",
-        payload: dir,
-    }));
+    axios.delete(`${process.env.REACT_APP_API_HOST}/dir/${dir.id}`).then((res) => {
+        console.log(res);
+        dispatch({
+            type: "DEL_DIR",
+            payload: dir,
+        });
+    });
 };
 export const closePopUp = (dispatch: React.Dispatch<ActionType>) => {
     dispatch({type: "CLOSE_POPUP"});
@@ -145,12 +146,16 @@ export const showPopUp = (dispatch: React.Dispatch<ActionType>, content: React.R
 
 export const addDir = (dispatch: React.Dispatch<ActionType>, dir: IDirectory) => {
     axios.post(`${process.env.REACT_APP_API_HOST}/dir`, dir)
-        .then((res: AxiosResponse<IDirectory>) => dispatch({type: "ADD_DIR", payload: res.data}));
+        .then((res: AxiosResponse<IDirectory>) => {console.log(res);
+            dispatch({type: "ADD_DIR", payload: res.data});
+        });
 
 };
 
 export const changeDir = (dispatch: React.Dispatch<ActionType>, dir: IDirectory) => {
     axios.patch(`${process.env.REACT_APP_API_HOST}/dir/${dir.id}`,
         {name: dir.name, parent_id: dir.parent_id})
-        .then((res) => dispatch({type: "PATCH_DIR", payload: res.data}));
+        .then((res) => {console.log(res);
+            dispatch({type: "PATCH_DIR", payload: res.data});
+        });
 };
