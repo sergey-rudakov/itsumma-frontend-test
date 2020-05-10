@@ -1,38 +1,316 @@
-.App {
-  text-align: center;
+.dirs-list {
+    padding: 30px 20px 10px 30px;
+    margin: 0;
+    width: 300px;
+    height: 75vh;
+    overflow: auto;
+    border: 1px solid #000000;
+    border-top: none;
+    border-bottom: none;
+    background-color: rgba(134, 210, 240, 0.64);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.list-item{
+    font-size: 1.1em;
+    text-align: left;
+    margin: 0;
+    display: flex;
+    max-width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.list-item:hover::after{
+    font-size: 0.6em;
+    content: attr(item-title);
+    position: absolute;
+    display: block;
+    border: 1px solid #000000;
+    width: fit-content;
+    padding: 3px;
+    left: 0;
+    bottom: 25px;
+    z-index: 100;
+    opacity: 1;
+    background-color: #ffffff;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.item-box{
+    display: flex;
+    margin-bottom: 5px;
+    padding: 20px 5px 5px 5px;
+    border-bottom: 1px solid #000;
+    justify-content: space-between;
+    padding-right: 100px;
+    position: relative;
+    width: fit-content;
+
 }
 
-.App-link {
-  color: #61dafb;
+.invisible{
+  display: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.non-visible{
+    display: none;
+}
+
+
+
+.action-btn{
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+    display: none;
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    margin-left: 5px;
+}
+
+.item-box:hover .action-btn{
+    display: block;
+}
+
+.action-blocks{
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
+.triangle{
+    margin-right: 10px;
+    cursor: pointer;
+    display: block;
+    width: 15px;
+    height: 15px;
+    left: -20px;
+    position: absolute;
+    top: 26px;
+    background-size: 15px 15px;
+}
+
+.open-tri{
+    transform:rotate(180deg);
+    background-image: url("media/rectangle_top.svg");
+}
+
+.close-tri{
+    transform:rotate(90deg);
+    background-image: url("media/rectangle_top.svg");
+}
+
+.del-btn{
+    background-image: url("media/delete.svg");
+}
+
+.action-btn:hover::after{
+    font-size: 0.6em;
+    content: attr(but-title);
+    position: absolute;
+    display: block;
+    border: 1px solid #000000;
+    width: fit-content;
+    padding: 3px;
+    left: 0;
+    bottom: 25px;
+    z-index: 100;
+    opacity: 1;
+    background-color: #ffffff;
+
+}
+
+.change-btn:hover::after{
+    left: unset;
+    right: 0;
+}
+.add-btn{
+    background-image: url("media/add.svg");
+}
+
+.change-btn{
+    background-image: url("media/change.svg");
+}
+
+
+/*PopUp's*/
+
+.popup{
+    font-family: Roboto, sans-serif;
+    display: flex;
+    border: 1px solid #000000;
+    width: 400px;
+    top: 30%;
+    left: calc(50% - 200px);
+    position: absolute;
+    padding: 20px;
+    background-color: rgba(170, 255, 155, 0.64);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.close-btn{
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 21px;
+    height: 21px;
+    border: 1px solid #000;
+    border-radius: 25%;
+    background-color: #fff;
+}
+
+.close-btn:hover{
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+.close-btn:before, .close-btn:after {
+    position: absolute;
+    right: 10px;
+    top: 1px;
+    content: ' ';
+    height: 19px;
+    width: 1px;
+    background-color: #000;
+}
+.close-btn:before {
+    transform: rotate(45deg);
+}
+.close-btn:after {
+    transform: rotate(-45deg);
+}
+
+.del-popup{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons-group{
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup button{
+    cursor: pointer;
+    background: white;
+    border: 1px solid #000;
+    padding: 5px;
+    align-self: flex-end;
+    width: 100px;
+}
+
+.popup button:hover{
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+.popup button[disabled]{
+    background: #feffeb;
+    cursor: default;
+}
+
+.popup h2{
+    font-weight: 500;
+}
+
+.buttons-group :first-child{
+    margin-right: 10px;
+}
+
+.del-popup h2{
+    margin: 0;
+}
+
+.popup form{
+}
+
+.add-form, .change-form{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.add-form h2, .change-form h2{
+    margin: 0;
+}
+
+.add-form input, .change-form input {
+    margin-left: 10px;
+    background: #fff;
+    padding: 5px 7px ;
+    font-size: 0.9em;
+    border: 1px solid black;
+}
+
+.add-form h2 + p, .change-form h2 + p{
+    font-size: 1.1em;
+    margin: 5px 0 20px 0;
+}
+
+.add-form input, .change-form input{
+    width: 210px;
+    margin-bottom: 20px;
+}
+
+.error-popup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-popup h2{
+    margin: 0;
+    color: #ff000f;
+}
+
+.error-popup p{
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
+/*Для приятного просмотра)*/
+.App{
+    padding: 0 20px;
+    font-family: Roboto, sans-serif;
+}
+
+.main-header h1{
+    text-align: left;
+    margin: 0;
+    font-weight: 400 ;
+}
+
+.main-header{
+    margin-top: 5px;
+    border: 1px solid #000000;
+    padding: 20px 20px;
+    background-color: rgba(240, 146, 134, 0.64);
+}
+
+.main-footer{
+    border: 1px solid #000000;
+    padding: 20px 20px;
+    background-color: rgba(240, 146, 134, 0.64);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.developer{
+    color: #6f5b5b;
+    margin: 0;
+    margin-right: 20px;
+}
+
+.main-footer a{
+    color: #2b32a3;
+}
+
+.main-footer a:visited{
+    color: #2b32a3;
 }
