@@ -1,0 +1,59 @@
+.directory {
+  user-select: none;
+  box-sizing: border-box;
+
+  .button-group {
+    display: flex;
+    margin-left: auto;
+    border: none;
+  }
+  ul {
+    display: none;
+  }
+}
+.directory--root {
+  & > .directory__head {
+    background-color: $l-gray;
+    border: 1px solid $l-gray;
+  }
+  ul {
+    margin-left: 33px;
+    border-left: 1px solid #ccc;
+  }
+}
+.directory__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 20px;
+  background-color: $gray;
+  border: 1px solid $gray;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(114, 114, 114, 0.2);
+    border: 1px solid rgba(97, 97, 97, 0.7);
+  }
+}
+.active > .directory__head {
+  background-color: rgba(58, 58, 170, 0.7);
+  border: 1px solid rgb(92, 172, 241);
+}
+.opened {
+  & > .directory__head .directory__arrow {
+    transform: rotate(90deg);
+  }
+  & > ul {
+    display: block;
+  }
+}
+.directory__name {
+  margin: 0;
+  color: white;
+  justify-self: start;
+  text-transform: uppercase;
+}
+.directory__arrow {
+  font-size: 18px;
+  color: white;
+}

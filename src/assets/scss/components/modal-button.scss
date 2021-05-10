@@ -1,0 +1,16 @@
+.modal-button {
+  padding: 0.5em 1em;
+  border: none;
+  cursor: pointer;
+
+  &--cancel {
+    background-color: #ccc;
+  }
+  &--ok {
+    background-color: rgba(58, 58, 170, 0.7);
+    color: white;
+  }
+  &[disabled="true"] {
+    opacity: 0.5;
+  }
+}
