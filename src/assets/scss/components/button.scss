@@ -1,0 +1,22 @@
+.button {
+  width: 35px;
+  height: 35px;
+  font-size: 10px;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all ease 0.15s;
+
+  &:hover {
+    background-color: #ccc;
+  }
+  &:active {
+    background-color: #ddd;
+  }
+}
+.button__icon {
+  vertical-align: middle;
+  color: rgb(139, 139, 139);
+}
