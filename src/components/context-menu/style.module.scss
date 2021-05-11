@@ -1,0 +1,26 @@
+.contextMenu {
+  position: fixed;
+  background-color: #131313;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 23px;
+  font-size: 13px;
+  color: #e5e5e5;
+  border: 1px dotted #434343;
+  box-sizing: border-box;
+}
+
+.contextMenuItem {
+  cursor: pointer;
+  padding: 2px 15px;
+  display: flex;
+  &:hover {
+    background-color: #333;
+  }
+}
+.contextMenuItemIcon {
+  display: block;
+  width: 15px;
+  margin-right: 5px;
+}
