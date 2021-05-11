@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -5,10 +6,8 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import React, { useContext, useState } from "react";
-import { find } from "tslint/lib/utils";
-import { AppContext } from "../App";
 import IDir from "../interfaces/IDir";
+import { AppContext } from "../App";
 import Button from "./Button";
 
 const ButtonEdit = () => {
@@ -17,6 +16,21 @@ const ButtonEdit = () => {
   const [disabled, setDisabled] = useState(true);
   const { dirs, setDirs } = useContext(AppContext);
 
+  useEffect(() => {
+    const activeDir = JSON.parse(localStorage.getItem("activeDir")!);
+    const parentDir = dirs!.find(
+      (item: IDir) => item.id === activeDir.parent_id,
+    );
+    if (
+      newName.length === 0 ||
+      parentDir?.subdirs!.find((item: IDir) => item.name === newName)
+    ) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [newName, dirs]);
+
   const handleOpenEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setModalOpened(true);
@@ -24,29 +38,18 @@ const ButtonEdit = () => {
 
   const handleCloseEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    setNewName("");
     setModalOpened(false);
   };
 
   const handleEditName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const activeDir = JSON.parse(localStorage.getItem("activeDir")!);
-    const parentDir = dirs!.find(
-      (item: IDir) => item.id === activeDir.parent_id
-    );
     setNewName(event.target.value);
-
-    if (
-      newName.length === 0 ||
-      parentDir?.subdirs!.find((item: IDir) => item.name === event.target.value)
-    ) {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     const { id, parent_id: parentID } = JSON.parse(
-      localStorage.getItem("activeDir")!
+      localStorage.getItem("activeDir")!,
     );
 
     fetch(`http://localhost:3050/dir/${id}`, {
@@ -62,9 +65,17 @@ const ButtonEdit = () => {
       .then((data: Response) => data.json())
       .then((json: IDir) => {
         setDirs((prev: IDir[]) => [
-          ...prev.filter(item => item.id !== json.id),
+          ...prev.filter((item) => item.id !== json.id),
           json,
         ]);
+      })
+      .then(() => {
+        const defaultDir = {
+          id: "",
+          name: "",
+          parent_id: "",
+        };
+        localStorage.setItem("activeDir", JSON.stringify(defaultDir));
       });
 
     setModalOpened(false);
@@ -72,15 +83,27 @@ const ButtonEdit = () => {
 
   return (
     <>
-      <Button tooltip={"Edit"} clickHandler={handleOpenEdit}>
+      <Button
+        tooltip={"Edit"}
+        clickHandler={(event: React.MouseEvent<HTMLButtonElement>) => {
+          const { id } = JSON.parse(localStorage.getItem("activeDir")!);
+          if (id !== "") {
+            handleOpenEdit(event);
+          }
+        }}>
         create
       </Button>
       <Dialog
         open={modalOpened}
         onClose={handleCloseEdit}
         aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Change folder name</DialogTitle>
-        <DialogContent>
+        <DialogTitle
+          id="form-dialog-title"
+          onClick={(event: React.MouseEvent) => event.stopPropagation()}>
+          Change folder name
+        </DialogTitle>
+        <DialogContent
+          onClick={(event: React.MouseEvent) => event.stopPropagation()}>
           <TextField
             autoFocus
             margin="dense"
@@ -90,11 +113,6 @@ const ButtonEdit = () => {
             fullWidth
             autoComplete="off"
             onChange={handleEditName}
-            onKeyPress={(event: React.KeyboardEvent) => {
-              if (!disabled) {
-                return event.key === "Enter" ? handleConfirm() : null;
-              }
-            }}
           />
         </DialogContent>
         <DialogActions>

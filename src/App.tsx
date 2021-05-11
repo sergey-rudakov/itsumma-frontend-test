@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import DirList from "./components/DirList";
 import IDir from "./interfaces/IDir";
+import DirList from "./components/DirList";
 
 function getRoot(data: IDir[]) {
   return data.filter((item: IDir) => item.parent_id === "null");
@@ -21,14 +21,14 @@ function getTree(data: IDir[]) {
   });
 }
 
-interface ContextProps {
+interface IContextProps {
   dirs: IDir[];
   setDirs: any;
 }
 
-export const AppContext = createContext<Partial<ContextProps>>({
+export const AppContext = createContext<Partial<IContextProps>>({
   dirs: [],
-  setDirs: () => {},
+  setDirs: () => undefined,
 });
 
 const App: React.FC = () => {
@@ -41,6 +41,7 @@ const App: React.FC = () => {
       .then((json: IDir[]) => {
         setDirs([...dirs, ...json]);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

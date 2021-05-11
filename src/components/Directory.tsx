@@ -1,8 +1,8 @@
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Icon } from "@material-ui/core";
 import classNames from "classnames";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { AppContext } from "../App";
 import IDir from "../interfaces/IDir";
+import { AppContext } from "../App";
 import ButtonGroup from "./ButtonGroup";
 
 interface IDirectoryProps {
@@ -32,12 +32,14 @@ const Directory: React.FC<IDirectoryProps> = ({
     setOpened(!opened);
     setActive(true);
 
-    const active = dirs?.find((dir: IDir) => dir.id === dirRef.current!.id);
+    const activeDirectory = dirs?.find(
+      (dir: IDir) => dir.id === dirRef.current!.id,
+    );
     setActiveDir(
       (prev): IDir => ({
         ...prev,
-        ...active,
-      })
+        ...activeDirectory,
+      }),
     );
   };
 

@@ -1,5 +1,5 @@
-import { Icon, Tooltip } from "@material-ui/core";
 import React from "react";
+import { Icon, Tooltip } from "@material-ui/core";
 
 interface IButtonProps {
   tooltip: string;

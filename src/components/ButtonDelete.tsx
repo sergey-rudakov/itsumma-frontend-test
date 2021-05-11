@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -5,9 +6,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import React, { useContext, useState } from "react";
-import { AppContext } from "../App";
 import IDir from "../interfaces/IDir";
+import { AppContext } from "../App";
 import Button from "./Button";
 
 const ButtonDelete = () => {
@@ -24,25 +24,42 @@ const ButtonDelete = () => {
     setModalOpened(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     const { id: activeID } = JSON.parse(localStorage.getItem("activeDir")!);
 
     fetch(`http://localhost:3050/dir/${activeID}`, {
       method: "DELETE",
-    }).then(() => {
-      setDirs((prev: IDir[]) => [
-        ...prev!.filter(
-          (dir: IDir) => dir.id !== activeID && dir.parent_id !== activeID
-        ),
-      ]);
-    });
+    })
+      .then(() => {
+        setDirs((prev: IDir[]) => [
+          ...prev!.filter(
+            (dir: IDir) => dir.id !== activeID && dir.parent_id !== activeID,
+          ),
+        ]);
+      })
+      .then(() => {
+        const defaultDir = {
+          id: "",
+          name: "",
+          parent_id: "",
+        };
+        localStorage.setItem("activeDir", JSON.stringify(defaultDir));
+      });
 
     setModalOpened(false);
   };
 
   return (
     <>
-      <Button tooltip={"Delete"} clickHandler={handleOpenDelete}>
+      <Button
+        tooltip={"Delete"}
+        clickHandler={(event: React.MouseEvent<HTMLButtonElement>) => {
+          const { id } = JSON.parse(localStorage.getItem("activeDir")!);
+          if (id !== "") {
+            handleOpenDelete(event);
+          }
+        }}>
         delete
       </Button>
       <Dialog
@@ -50,8 +67,13 @@ const ButtonDelete = () => {
         onClose={handleCloseDelete}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-        <DialogTitle id="alert-dialog-title">Delete folder</DialogTitle>
-        <DialogContent>
+        <DialogTitle
+          id="alert-dialog-title"
+          onClick={(event: React.MouseEvent) => event.stopPropagation()}>
+          Delete folder
+        </DialogTitle>
+        <DialogContent
+          onClick={(event: React.MouseEvent) => event.stopPropagation()}>
           <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this folder?
           </DialogContentText>
