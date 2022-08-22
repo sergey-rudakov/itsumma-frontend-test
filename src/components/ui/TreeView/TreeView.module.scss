@@ -1,0 +1,65 @@
+.node {
+  font-weight: 500;
+  padding: 0.5em 0.5em;
+}
+
+.children {
+  color: #262626;
+  padding: 0.2em 0.5em;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  transition: .3s background-color;
+  user-select: none;
+
+  &:hover {
+    background-color: #EDEEF6FF;
+    border-radius: 5px;
+
+    .crudIcons {
+      opacity: 1;
+    }
+  }
+}
+
+.title {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.crudIcons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: .3s opacity;
+}
+
+.crudIcons svg {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  padding: 0.2em;
+  border-radius: 50%;
+
+  &:hover {
+    background-color: #E4E5EEFF;
+  }
+}
+
+.openIcon {
+  color: #273369;
+}
+
+.addIcon {
+  color: #47812b;
+}
+
+.editIcon {
+  color: #116773;
+}
+
+.deleteIcon {
+  color: #911515;
+}

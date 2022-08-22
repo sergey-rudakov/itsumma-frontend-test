@@ -1,0 +1,23 @@
+.field {
+  padding: 5px 10px;
+  border: none;
+  outline: 1px solid #273369;
+  border-radius: 1px;
+}
+
+.field:focus {
+  outline: 1px solid #33479b;
+}
+
+.error {
+  color: #911515;
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+.container {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
