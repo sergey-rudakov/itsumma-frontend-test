@@ -1,0 +1,28 @@
+.params {
+  display: inline-block;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #273369;
+  animation: spinner-animation 3s ease-in-out infinite;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #FFF;
+    margin-top: 1px;
+  }
+}
+
+@keyframes spinner-animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,21 @@
+.container {
+  height: 38px;
+  padding: 5px 10px;
+  margin: 15px 0;
+  border: none;
+  border-radius: 1px;
+  outline: 1px solid #566acc;
+  background-color: #566acc;
+  color: #FFF;
+  cursor: pointer;
+  transition: .3s background-color;
+
+  &:hover {
+    background-color: #39499a;
+  }
+}
+
+.container:disabled {
+  background-color: #ababab;
+  outline: 1px solid #ababab;
+}

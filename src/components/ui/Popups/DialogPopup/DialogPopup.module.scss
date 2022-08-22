@@ -1,0 +1,31 @@
+.container {
+  padding: 20px 50px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.deny {
+  width: 40%;
+  margin: 0 !important;
+}
+
+.agree {
+  width: 40%;
+  margin: 0 !important;
+  background-color: #9f1a1a !important;
+  outline: 1px solid #9f1a1a !important;
+
+  &:hover {
+    background-color: #8c1c1c !important;
+  }
+}
