@@ -31,23 +31,31 @@ class DirectoryService {
 
   async updateDirectory(node: DircetoryI): Promise<DircetoryI> {
     try {
-      const { data } = await this.apiAxios.patch<DircetoryI>(`/dir/${node.id}`, {
-        ...node,
-      });
+      const { data } = await this.apiAxios.patch<DircetoryI>(
+        `/dir/${node.id}`,
+        {
+          ...node,
+        }
+      );
       return data;
     } catch (error) {
       throw new Error("Error");
     }
   }
 
-  async removeDirectory(nodes: DircetoryI[]): Promise<void[]> {
+  async removeDirectory(nodes: DircetoryI[]) {
     try {
-      return await Promise.all(
+      await axios.all(
         nodes.map(async (node: DircetoryI) => {
-          return await this.apiAxios.delete(`/dir/${node.id}`);
+          try {
+            await this.apiAxios.delete(`/dir/${node.id}`);
+          } catch (e) {
+            throw new Error("Error");
+          }
         })
       );
     } catch (error) {
+      this.removeDirectory(nodes);
       throw new Error("Error");
     }
   }

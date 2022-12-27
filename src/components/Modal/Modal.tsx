@@ -67,8 +67,6 @@ const Modal: React.FC = () => {
       ...modalContent,
       input: e.target.value,
     });
-    console.log(modalContent.input, dataDirectory);
-
     if (method == "create") {
       const searchDupliace = dataDirectory.find(
         (d) => d.name === e.target.value

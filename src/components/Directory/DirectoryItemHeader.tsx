@@ -13,6 +13,8 @@ const DirectoryItemHeaderS = styled.div`
   transition: 300ms linear;
   display: flex;
   align-items: center;
+  flex-flow: wrap;
+  overflow-wrap: anywhere;
   :hover {
     background: #80808045;
     ${DirectoryBtnsWrapper} {

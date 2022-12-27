@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import { DirectoryManagerI } from ".";
 import { DirectoryContext } from "../../context/DirectoryProvaider";
 import { ModalContext } from "../../context/ModalProvaider";
 
@@ -23,14 +24,26 @@ const DirectoryBtn = styled.button<{ color?: string }>`
   transition: 300ms linear;
   :hover {
     color: white;
-    background: ${({ color }) => color };
+    background: ${({ color }) => color};
   }
 `;
 
-export const DirectoryBtns = ({ directory, children }: any) => {
+export const DirectoryBtns = ({ directory }: any) => {
   const { openModal, SetmodalContent } = useContext(ModalContext);
-  const { setdirectoryItemData } = useContext(DirectoryContext);
-  const removeDirectorys = [directory, ...children];
+  const { setdirectoryItemData, dataDirectory } = useContext(DirectoryContext);
+
+  const findDependencies = (data: any[], directory: any) => {
+    const dependencies: any[] = [];
+    data.forEach((item) => {
+      if (item.parent_id === directory.id) {
+        dependencies.push(item);
+        dependencies.push(...findDependencies(data, item));
+      }
+    });
+
+    return dependencies;
+  };
+
   const BtnClick = (
     _method: string,
     title = "",
@@ -41,6 +54,9 @@ export const DirectoryBtns = ({ directory, children }: any) => {
       e.stopPropagation();
       openModal();
 
+      const directorysRemove = 
+        findDependencies(dataDirectory, directory).concat(directory)
+        
       SetmodalContent({
         title: title,
         input: input,
@@ -49,7 +65,7 @@ export const DirectoryBtns = ({ directory, children }: any) => {
 
       setdirectoryItemData({
         parent_id: directory.parent_id,
-        id: _method === "remove" ? removeDirectorys : directory.id,
+        id: _method === "remove" ? directorysRemove : directory.id,
         method: _method,
       });
     };
