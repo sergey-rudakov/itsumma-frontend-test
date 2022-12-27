@@ -27,8 +27,11 @@ export const useDircetory = () => {
       refreshData();
     },
     remove: async (node: DircetoryI[]) => {
-      await DirectoryService.removeDirectory(node);
-      refreshData();
+      try {
+        await DirectoryService.removeDirectory(node);
+      } finally {
+        refreshData();
+      }
     },
     update: async (node: DircetoryI) => {
       await DirectoryService.updateDirectory(node);

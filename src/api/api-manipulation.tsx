@@ -55,7 +55,6 @@ class DirectoryService {
         })
       );
     } catch (error) {
-      this.removeDirectory(nodes);
       throw new Error("Error");
     }
   }
