@@ -1,5 +1,4 @@
 import { Item, ItemWithChildren, ItemWithChildrenIds } from "../models";
-let idsRemove: string[] = [];
 
 export enum ItemsActionKind {
   fetchData = "fetch",
@@ -69,21 +68,22 @@ export const dispatchMiddleware = (dispatch: React.Dispatch<ItemsAction>) => {
         {
           const res = await fetch("/dir");
           const dataFromServer: Item[] = await res.json();
-          getIdsRemove(dataFromServer, payload?.id);
+          const idsRemove: string[] | undefined = getIdsRemove(
+            dataFromServer,
+            payload?.id
+          );
           const promises: any = [];
-          idsRemove.forEach((id) => {
-            const prom = fetch(`/dir/${id}`, {
-              method: "DELETE",
+          if (idsRemove) {
+            idsRemove.forEach((id) => {
+              const prom = fetch(`/dir/${id}`, {
+                method: "DELETE",
+              });
+              promises.push(prom);
             });
-            promises.push(prom);
-          });
-          const prom = fetch(`/dir/${payload?.id}`, {
-            method: "DELETE",
-          });
-          promises.push(prom);
-          Promise.all(promises).then(() => {
-            fetchAndReplace();
-          });
+            Promise.all(promises).then(() => {
+              fetchAndReplace();
+            });
+          }
         }
         break;
       case ItemsActionKind.createItem:
@@ -126,10 +126,22 @@ const isNotUndefined = (
 };
 
 const getIdsRemove = (data: Item[], id: string | undefined) => {
+  if (!id) return;
+  const idsRemove: string[] = [];
+  _getIdsRemoveHelper(data, id, idsRemove);
+  idsRemove.push(id);
+  return idsRemove;
+};
+
+const _getIdsRemoveHelper = (
+  data: Item[],
+  id: string | undefined,
+  idsRemove: string[]
+) => {
   data.forEach((item) => {
     if (id === item.parent_id && !idsRemove.includes(item.id)) {
-      idsRemove = [item.id, ...idsRemove];
-      getIdsRemove(data, item.id);
+      idsRemove.unshift(item.id);
+      _getIdsRemoveHelper(data, item.id, idsRemove);
     }
   });
 };
